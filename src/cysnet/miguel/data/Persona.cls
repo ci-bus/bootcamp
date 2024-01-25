@@ -1,4 +1,4 @@
-Class cysnet.miguel.ws.data.Persona Extends %Persistent
+Class cysnet.miguel.data.Persona Extends %Persistent
 {
 
 Property nombre As %String;
@@ -18,11 +18,11 @@ Storage Default
 <Value>apellido</Value>
 </Value>
 </Data>
-<DataLocation>^cysnet.miguel.ws.data.PersonaD</DataLocation>
+<DataLocation>^cysnet.miguel.data.PersonaD</DataLocation>
 <DefaultData>PersonaDefaultData</DefaultData>
-<IdLocation>^cysnet.miguel.ws.data.PersonaD</IdLocation>
-<IndexLocation>^cysnet.miguel.ws.data.PersonaI</IndexLocation>
-<StreamLocation>^cysnet.miguel.ws.data.PersonaS</StreamLocation>
+<IdLocation>^cysnet.miguel.data.PersonaD</IdLocation>
+<IndexLocation>^cysnet.miguel.data.PersonaI</IndexLocation>
+<StreamLocation>^cysnet.miguel.data.PersonaS</StreamLocation>
 <Type>%Storage.Persistent</Type>
 }
 

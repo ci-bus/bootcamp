@@ -1,5 +1,7 @@
-Class cysnet.miguel.msg.ObtenerPersonaResponse Extends Ens.Response
+Class cysnet.miguel.msg.CrearPersonaResponse Extends Ens.Response
 {
+
+Property idPersona As %String;
 
 Property nombre As %String;
 
@@ -13,8 +15,8 @@ Property error As %String(MAXLEN = "");
 
 Storage Default
 {
-<Data name="ObtenerPersonaResponseDefaultData">
-<Subscript>"ObtenerPersonaResponse"</Subscript>
+<Data name="CrearPersonaResponseDefaultData">
+<Subscript>"CrearPersonaResponse"</Subscript>
 <Value name="1">
 <Value>nombre</Value>
 </Value>
@@ -30,8 +32,11 @@ Storage Default
 <Value name="5">
 <Value>error</Value>
 </Value>
+<Value name="6">
+<Value>idPersona</Value>
+</Value>
 </Data>
-<DefaultData>ObtenerPersonaResponseDefaultData</DefaultData>
+<DefaultData>CrearPersonaResponseDefaultData</DefaultData>
 <Type>%Storage.Persistent</Type>
 }
 

@@ -1,15 +1,23 @@
 Class cysnet.miguel.bp.MiProcesoCodigo Extends Ens.BusinessProcess
 {
 
-Method OnRequest(pRequest As cysnet.miguel.msg.ObtenerPersonaRequest, Output pResponse As cysnet.miguel.msg.ObtenerPersonaResponse) As %Status
+Method OnRequest(pRequest As Ens.Request, Output pResponse As Ens.Response) As %Status
 {
-    set pResponse = ##class(cysnet.miguel.msg.ObtenerPersonaResponse).%New()
+    #dim sc As %Status = $$$OK
+    If (pRequest.%ClassName() = "CrearPersonaRequest") {
+        Set pResponse = ##class(cysnet.miguel.msg.CrearPersonaResponse).%New()
+        
+        Do ..SendRequestSync("DBCache", pRequest, .pResponse)
+    } ElseIf (pRequest.%ClassName() = "ObtenerPersonaRequest") {
+        Set pResponse = ##class(cysnet.miguel.msg.ObtenerPersonaResponse).%New()
 
-    if (pRequest.idPersona > 0) {
-        do ..SendRequestSync("DBCache", pRequest, .pResponse)
+        If (pRequest.idPersona > 0) {
+            Do ..SendRequestSync("DBCache", pRequest, .pResponse)
+        }
+
     }
 
-    quit $$$OK
+        Quit sc
 }
 
 Storage Default

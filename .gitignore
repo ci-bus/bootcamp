@@ -1,1 +1,4 @@
+/.vscode/settings.json
+/iris-shared/*
+/mysql-shared/*
 /.DS_Store
