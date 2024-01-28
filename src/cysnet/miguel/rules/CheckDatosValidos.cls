@@ -12,8 +12,11 @@ XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 <when condition="nombreClase = &quot;ObtenerPersonaRequest&quot;" comment="">
 <rule name="Comprobar idPersona" disabled="false">
 <when condition="(objReq.idPersona!=&quot;&quot;)&amp;&amp;(objReq.idPersona&gt;0)" comment="">
-<return>1</return>
+<return>""</return>
 </when>
+<otherwise>
+<return>"El ID de persona no es válido"</return>
+</otherwise>
 </rule>
 </when>
 </rule>
@@ -21,8 +24,11 @@ XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 <when condition="nombreClase = &quot;CrearPersonaRequest&quot;" comment="">
 <rule name="Comprobar nombre y apellido" disabled="false">
 <when condition="((objReq.nombre!=&quot;&quot;)&amp;&amp;Length(objReq.nombre,) &gt; 1)&amp;&amp;objReq.apellido!=&quot;&quot;&amp;&amp;(Length(objReq.apellido,))&gt;1" comment="">
-<return>1</return>
+<return>""</return>
 </when>
+<otherwise>
+<return>"El nombre y apellido son obligatorios"</return>
+</otherwise>
 </rule>
 </when>
 </rule>
