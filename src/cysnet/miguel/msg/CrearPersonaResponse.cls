@@ -7,6 +7,10 @@ Property nombre As %String;
 
 Property apellido As %String;
 
+Property direccion As %String(MAXLEN = "");
+
+Property codigoPostal As %Integer;
+
 Property mensaje As %String;
 
 Property exito As %Boolean;
@@ -34,6 +38,12 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>idPersona</Value>
+</Value>
+<Value name="7">
+<Value>direccion</Value>
+</Value>
+<Value name="8">
+<Value>codigoPostal</Value>
 </Value>
 </Data>
 <DefaultData>CrearPersonaResponseDefaultData</DefaultData>

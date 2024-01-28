@@ -1,9 +1,15 @@
 Class cysnet.miguel.msg.ObtenerPersonaResponse Extends Ens.Response
 {
 
+Property idPersona As %String;
+
 Property nombre As %String;
 
 Property apellido As %String;
+
+Property direccion As %String(MAXLEN = "");
+
+Property codigoPostal As %Integer;
 
 Property mensaje As %String;
 
@@ -29,6 +35,15 @@ Storage Default
 </Value>
 <Value name="5">
 <Value>error</Value>
+</Value>
+<Value name="6">
+<Value>direccion</Value>
+</Value>
+<Value name="7">
+<Value>codigoPostal</Value>
+</Value>
+<Value name="8">
+<Value>idPersona</Value>
 </Value>
 </Data>
 <DefaultData>ObtenerPersonaResponseDefaultData</DefaultData>

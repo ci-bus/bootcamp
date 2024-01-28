@@ -5,6 +5,10 @@ Property nombre As %String;
 
 Property apellido As %String;
 
+Property direccion As %String(MAXLEN = "");
+
+Property codigoPostal As %Integer;
+
 Storage Default
 {
 <Data name="PersonaDefaultData">
@@ -16,6 +20,12 @@ Storage Default
 </Value>
 <Value name="3">
 <Value>apellido</Value>
+</Value>
+<Value name="4">
+<Value>direccion</Value>
+</Value>
+<Value name="5">
+<Value>codigoPostal</Value>
 </Value>
 </Data>
 <DataLocation>^cysnet.miguel.data.PersonaD</DataLocation>

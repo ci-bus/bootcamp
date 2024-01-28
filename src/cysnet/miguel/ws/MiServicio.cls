@@ -5,7 +5,7 @@ Class cysnet.miguel.ws.MiServicio Extends EnsLib.SOAP.Service [ ProcedureBlock ]
 Parameter SERVICENAME = "MiServicio";
 
 /// Namespace SOAP para servicio web
-Parameter NAMESPACE = "PRUEBAS";
+Parameter NAMESPACE = "BOOTCAMP-ENERO-2024";
 
 /// Se utilizarán namespaces de clases referenciadas en WSDL.
 Parameter USECLASSNAMESPACES = 1;
@@ -23,7 +23,7 @@ Method obtenerPersona(idPersona As %String) As cysnet.miguel.msg.ObtenerPersonaR
 	quit rsp
 }
 
-Method crearPersona(nombre As %String, apellido As %String) As cysnet.miguel.msg.ObtenerPersonaResponse [ WebMethod ]
+Method crearPersona(nombre As %String, apellido As %String) As cysnet.miguel.msg.CrearPersonaResponse [ WebMethod ]
 {
 	#dim req As cysnet.miguel.msg.CrearPersonaRequest
 	#dim rsp As cysnet.miguel.msg.CrearPersonaResponse

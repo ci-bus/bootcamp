@@ -9,37 +9,50 @@ Method crearPersona(pRequest As cysnet.miguel.msg.CrearPersonaRequest, Output pR
 
     Set pResponse = ##class(cysnet.miguel.msg.CrearPersonaResponse).%New()
     Set pResponse.exito = 1
-    try {
+    Try {
+        // Comprobar si el usuario existe
         Set stm = ##class(%SQL.Statement).%New()
-        &sql(INSERT INTO cysnet_miguel_data.Persona (apellido, nombre) VALUES (:pRequest.nombre, :pRequest.apellido))
-        &sql(SELECT LAST_IDENTITY() INTO :insertID FROM cysnet_miguel_data.Persona)
-        if ($$$ISOK(sc)) {
-            Set rs = stm.%Execute(pRequest.apellido, pRequest.nombre)
-
-            If (insertID > 0) {
-                Set pResponse.idPersona = insertID
-                Set pResponse.nombre = pRequest.nombre
-                Set pResponse.apellido = pRequest.apellido
-                Set pResponse.mensaje = "Registro creado con éxito!"
+        Set sc = stm.%Prepare("SELECT ID FROM cysnet_miguel_data.Persona WHERE nombre = '"_pRequest.nombre_"' AND apellido = '"_pRequest.apellido_"'")
+                
+        If ($$$ISOK(sc)) {
+            Set rs = stm.%Execute()
+            If (rs.%Next(.sc)) {
+                Set pResponse.exito = $$$OK
+                Set pResponse.mensaje = "El usuario ya existe"
             } Else {
-                Set pResponse.mensaje = "No se ha podido crear ("_pRequest.nombre_" "_pRequest.apellido_")"
+                Set stm = ##class(%SQL.Statement).%New()
+                &sql(INSERT INTO cysnet_miguel_data.Persona (nombre, apellido, direccion, codigoPostal) VALUES (:pRequest.nombre, :pRequest.apellido, :pRequest.direccion, :pRequest.codigoPostal))
+                &sql(SELECT LAST_IDENTITY() INTO :insertID FROM cysnet_miguel_data.Persona)
+                If ($$$ISOK(sc)) {
+                    Set rs = stm.%Execute(pRequest.apellido, pRequest.nombre, pRequest.direccion, pRequest.codigoPostal)
+
+                    If (insertID > 0) {
+                        Set pResponse.idPersona = insertID
+                        Set pResponse.nombre = pRequest.nombre
+                        Set pResponse.apellido = pRequest.apellido
+                        Set pResponse.mensaje = "Registro creado con éxito!"
+                    } Else {
+
+                        Set pResponse.mensaje = "No se ha podido crear ("_pRequest.nombre_" "_pRequest.apellido_")"
+                    }
+                }
             }
         }
-    } catch (err) {
+    } Catch (err) {
         // Si ha ocurrido un error, crear el objeto Status:
-        if (err.%ClassName(1)="common.err.exception") && ($$$ISERR(err.status)) {
-            set sc = err.status
-        } else {
-            set sc = $System.Status.Error(err.Code,err.Name,err.Location,err.InnerException)
+        If (err.%ClassName(1)="common.err.exception") && ($$$ISERR(err.status)) {
+            Set sc = err.status
+        } Else {
+            Set sc = $SYSTEM.Status.Error(err.Code,err.Name,err.Location,err.InnerException)
         }
     }
 
-    if ($$$ISERR(sc)) {
-        set pResponse.exito = 0
-        set pResponse.error = $System.Status.GetErrorText(sc)
+    If ($$$ISERR(sc)) {
+        Set pResponse.exito = 0
+        Set pResponse.error = $SYSTEM.Status.GetErrorText(sc)
     }
     
-    Quit sc
+    Quit $$$OK
 }
 
 /// Método que obtiene los datos de una persona a partir de su ID
@@ -51,34 +64,37 @@ Method obtenerPersona(pRequest As cysnet.miguel.msg.ObtenerPersonaRequest, Outpu
 
     Set pResponse = ##class(cysnet.miguel.msg.ObtenerPersonaResponse).%New()
     Set pResponse.exito = 1
-    try {
+    Try {
         Set stm = ##class(%SQL.Statement).%New()
-        set sc = stm.%Prepare("SELECT nombre, apellido FROM cysnet_miguel_data.Persona WHERE ID = "_pRequest.idPersona)
-        if ($$$ISOK(sc)) {
+        Set sc = stm.%Prepare("SELECT ID, nombre, apellido, direccion, codigoPostal FROM cysnet_miguel_data.Persona WHERE ID = "_pRequest.idPersona)
+        If ($$$ISOK(sc)) {
             Set rs = stm.%Execute()
 
             If (rs.%Next(.sc)) {
+                Set pResponse.idPersona = rs.ID
                 Set pResponse.nombre = rs.nombre
                 Set pResponse.apellido = rs.apellido
+                Set pResponse.direccion = rs.direccion
+                Set pResponse.codigoPostal = rs.codigoPostal
             } Else {
                 Set pResponse.mensaje = "No existen datos para ese identificador ("_pRequest.idPersona_")"
             }
         }
-    } catch (err) {
+    } Catch (err) {
         // Si ha ocurrido un error, crear el objeto Status:
-        if (err.%ClassName(1)="common.err.exception") && ($$$ISERR(err.status)) {
-            set sc = err.status
-        } else {
-            set sc = $System.Status.Error(err.Code,err.Name,err.Location,err.InnerException)
+        If (err.%ClassName(1)="common.err.exception") && ($$$ISERR(err.status)) {
+            Set sc = err.status
+        } Else {
+            Set sc = $SYSTEM.Status.Error(err.Code,err.Name,err.Location,err.InnerException)
         }
     }
 
-    if ($$$ISERR(sc)) {
-        set pResponse.exito = 0
-        set pResponse.error = $System.Status.GetErrorText(sc)
+    If ($$$ISERR(sc)) {
+        Set pResponse.exito = 0
+        Set pResponse.error = $SYSTEM.Status.GetErrorText(sc)
     }
     
-    Quit sc
+    Quit $$$OK
 }
 
 XData MessageMap

@@ -1,4 +1,4 @@
-Class cysnet.miguel.msg.CrearPersonaRequest Extends Ens.Response
+Class cysnet.miguel.msg.CrearPersonaRequest Extends Ens.Request
 {
 
 Property idPersona As %String;
@@ -6,6 +6,10 @@ Property idPersona As %String;
 Property nombre As %String;
 
 Property apellido As %String;
+
+Property direccion As %String(MAXLEN = "");
+
+Property codigoPostal As %Integer;
 
 Storage Default
 {
@@ -19,6 +23,12 @@ Storage Default
 </Value>
 <Value name="3">
 <Value>apellido</Value>
+</Value>
+<Value name="4">
+<Value>direccion</Value>
+</Value>
+<Value name="5">
+<Value>codigoPostal</Value>
 </Value>
 </Data>
 <DefaultData>CrearPersonaRequestDefaultData</DefaultData>
