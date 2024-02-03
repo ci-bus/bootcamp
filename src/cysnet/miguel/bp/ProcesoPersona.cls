@@ -38,7 +38,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <true>
 <switch name='Según mensaje' xpos='470' ypos='700' xend='470' yend='950' >
 <case condition='request.%ClassName() = "CrearPersonaRequest"' name='CrearPersona' >
-<call name='Crear Persona' target='DBCache' async='0' xpos='605' ypos='850' >
+<call name='Crear Persona' target='MySQLOp' async='0' xpos='605' ypos='850' >
 <request type='cysnet.miguel.msg.CrearPersonaRequest' >
 <assign property="callrequest" value="request" action="set" />
 </request>
@@ -48,7 +48,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </call>
 </case>
 <case condition='request.%ClassName() = "ObtenerPersonaRequest"' name='ObtenerPersona' >
-<call name='Obtener persona' target='DBCache' async='0' xpos='875' ypos='850' >
+<call name='Obtener persona' target='MySQLOp' async='0' xpos='875' ypos='850' >
 <request type='cysnet.miguel.msg.ObtenerPersonaRequest' >
 <assign property="callrequest" value="request" action="set" />
 </request>
