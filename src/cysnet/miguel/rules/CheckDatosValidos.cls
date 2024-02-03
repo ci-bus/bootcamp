@@ -7,6 +7,7 @@ Parameter RuleAssistClass = "Ens.Rule.GeneralBusinessRuleAssist";
 XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 {
 <ruleDefinition alias="" context="cysnet.miguel.bp.ProcesoPersona.Context" production="">
+<variable name="cysnet"></variable>
 <ruleSet name="" effectiveBegin="" effectiveEnd="">
 <rule name="Comprobar ObtenerPersona" disabled="false">
 <when condition="nombreClase = &quot;ObtenerPersonaRequest&quot;" comment="">
@@ -18,6 +19,7 @@ XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 <return>"El ID de persona no es válido"</return>
 </otherwise>
 </rule>
+<assign property="destinatario" value="&quot;miguel@cysnet.es&quot;"></assign>
 </when>
 </rule>
 <rule name="Comprobar CrearPersona" disabled="false">
@@ -30,6 +32,7 @@ XData RuleDefinition [ XMLNamespace = "http://www.intersystems.com/rule" ]
 <return>"El nombre y apellido son obligatorios"</return>
 </otherwise>
 </rule>
+<assign property="destinatario" value="&quot;miguel@cysnet.es&quot;"></assign>
 </when>
 </rule>
 </ruleSet>

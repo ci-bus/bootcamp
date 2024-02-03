@@ -23,6 +23,11 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <parameter name='MAXLEN'  value='50' />
 </parameters>
 </property>
+<property name='destinatario' type='%String' instantiate='0' >
+<parameters>
+<parameter name='MAXLEN'  value='50' />
+</parameters>
+</property>
 </context>
 <sequence xend='200' yend='1150' >
 <assign name="Asignar objReq" property="context.objReq" value="request" action="set" xpos='200' ypos='250' />
@@ -56,8 +61,17 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </switch>
 </true>
 <false>
-<assign name="Estado de error" property="response.exito" value="0" action="set" xpos='200' ypos='700' />
-<assign name="Mensaje de error" property="response.error" value="context.resultadoRegla" action="set" xpos='200' ypos='800' />
+<call name='EnviarEmail' target='EnviarEmail' async='0' xpos='200' ypos='700' >
+<request type='cysnet.miguel.msg.EnviarEmailRequest' >
+<assign property="callrequest.asunto" value="&quot;Datos incorrectos&quot;" action="set" />
+<assign property="callrequest.mensaje" value="context.resultadoRegla" action="set" />
+<assign property="callrequest.destinatario" value="context.destinatario" action="set" />
+</request>
+<response type='cysnet.miguel.msg.EnviarEmailResponse' >
+<assign property="response.exito" value="0" action="set" />
+<assign property="response.error" value="context.resultadoRegla" action="set" />
+</response>
+</call>
 </false>
 </if>
 </sequence>
