@@ -5,7 +5,7 @@ Class cysnet.clinicaDental.agenda.ws.GestionPacientes Extends EnsLib.SOAP.Servic
 Parameter SERVICENAME = "GestionPacientes";
 
 /// Namespace SOAP para servicio web
-Parameter NAMESPACE = "BOOTCAMPENERO24";
+Parameter NAMESPACE = "BOOTCAMP-ENERO-2024";
 
 /// Se utilizarán namespaces de clases referenciadas en WSDL.
 Parameter USECLASSNAMESPACES = 1;
@@ -21,7 +21,7 @@ Method NuevoPaciente(nombre As %String, apellidos As %String, email As %String) 
 	Set req.email = email
 	Set req.nombre = nombre
 	
-	Do ..SendRequestSync("PacientesSQL", req, .rsp)
+	Do ..SendRequestSync("ProcesoPaciente", req, .rsp)
 	
 	Quit rsp
 }

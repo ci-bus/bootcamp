@@ -1,43 +1,89 @@
 Class cysnet.clinicaDental.agenda.bo.CitasSQL Extends Ens.BusinessOperation
 {
 
+Parameter ADAPTER = "EnsLib.SQL.OutboundAdapter";
+
+Property Adapter As EnsLib.SQL.OutboundAdapter;
+
+Parameter INVOCATION = "Queue";
+
 /// Método para cancelar una cita
 Method cancelarCita(pRequest As cysnet.clinicaDental.agenda.msg.CancelarCitaRequest, Output pResponse As cysnet.clinicaDental.agenda.msg.CancelarCitaResponse) As %Status
 {
-    set pResponse = ##class(cysnet.clinicaDental.agenda.msg.CancelarCitaResponse).%New()
+    #dim sc As %Status = $$$OK
+    #dim rs As EnsLib.SQL.GatewayResultSet
 
-    set stm = ##class(%SQL.Statement).%New()
-    do stm.%Prepare("SELECT ID FROM cysnet_clinicaDental_agenda_data.Citas WHERE ID = "_pRequest.idCita)
+    Set pResponse = ##class(cysnet.clinicaDental.agenda.msg.CancelarCitaResponse).%New()
 
-    set rs = stm.%Execute()
+    Set rs = ##class(EnsLib.SQL.GatewayResultSet).%New()
+    Set sql = "SELECT IdCita FROM Cita WHERE IdCita = ?"
+    Set sc = ..Adapter.ExecuteQuery(.rs, sql, pRequest.idCita)
 
-    if (rs.%Next()) {
-        &sql(UPDATE cysnet_clinicaDental_agenda_data.Citas SET codEstado = 4 WHERE ID = :pRequest.idCita)
-    } else {
-        set pResponse.mensaje = "No se encontró la cita"
+    If ($$$ISOK(sc)) {
+        If (rs.Next(.sc)) {
+            #dim numRows As %Integer
+            Set sql = "UPDATE Cita SET CodEstado = 4 WHERE IdCita = ?"
+            Set sc = ..Adapter.ExecuteUpdate(.numRows, sql, pRequest.idCita)
+            If ($$$ISOK(sc)) {
+                Set pResponse.exito = (numRows > 0)
+                If (pResponse.exito) {
+                    Set pResponse.mensaje = "La cita ha sido cancelada"
+                } Else {
+                    Set pResponse.mensaje = "La cita no se ha podido cancelar"
+                }
+            } Else {
+                Set pResponse.exito = 0
+                Set pResponse.mensaje = "Error en sql: "_sql
+            }
+        } Else {
+            Set pResponse.exito = 0
+            Set pResponse.mensaje = "No se encontró la cita"
+        }
+    } Else {
+        Set pResponse.exito = 0
+        Set pResponse.mensaje = "Error en sql: "_sql
     }
     
-    quit $$$OK
+    Quit $$$OK
 }
 
 Method altaCitas(pRequest As cysnet.clinicaDental.agenda.msg.AltaCitasRequest, Output pResponse As cysnet.clinicaDental.agenda.msg.AltaCitasRespose) As %Status
 {
     #dim sc As %Status = $$$OK
+    #dim rs As EnsLib.SQL.GatewayResultSet
 
-    Set stm = ##class(%SQL.Statement).%New()
-    Do stm.%Prepare("SELECT * FROM cysnet_clinicaDental_agenda_data.Citas WHERE idPaciente = ?")
-    Set rs =  stm.%Execute(pRequest.idPaciente)
+    Set pResponse = ##class(cysnet.clinicaDental.agenda.msg.AltaCitasRespose).%New()
+
+    Set rs = ##class(EnsLib.SQL.GatewayResultSet).%New()
+    Set sc = ..Adapter.ExecuteQuery(.rs, "SELECT * FROM Cita WHERE IdPaciente = ?", pRequest.idPaciente)
+    If ($$$ISOK(sc)) {
+        If (rs.Next(.sc)) {
+            Set pResponse.exito = 0
+            Set pResponse.mensaje = "Ya existe una cita id: "_rs.Get("IdCita")
+            Quit sc
+        }
+
+        #dim numRows As %Integer = 0
     
-    If (rs.%Next(.sc)) {
-      Quit sc
+        Set sql = "INSERT INTO Cita (IdPaciente, DescCita, FechaCita, CodEstado) VALUES (?,?,?,?) "
+        Set sc = ..Adapter.ExecuteUpdate(.numRows, sql, pRequest.idPaciente, pRequest.descCita, pRequest.fechaCita, 1)
+        If ($$$ISOK(sc)) {
+            If (numRows > 0) {
+                Set pResponse.mensaje = "La cita se ha creado con éxito"
+            } Else {
+                Set pResponse.mensaje = "No se ha podido crear la cita"
+            }
+            Set pResponse.exito = sc
+        } Else {
+            Set pResponse.mensaje = "Error en consulta: "_sql
+            Set pResponse.exito = 0
+        }
+    } Else {
+        Set pResponse.mensaje = "Error en consulta: "_sql
+        Set pResponse.exito = 0
     }
-   
-    Set stm = ##class(%SQL.Statement).%New()
-    do stm.%Prepare("INSERT INTO cysnet_clinicaDental_agenda_data.Citas (idPaciente, descCita, fechaCita, codEstado) VALUES (?,?,?,?) ")
-    Set rs = stm.%Execute(pRequest.idPaciente, pRequest.descCita, pRequest.fechaCita, 1)
-
-        set rs = stm.%Execute()
-        quit sc
+    
+    Quit numRows
 }
 
 XData MessageMap

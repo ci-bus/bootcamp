@@ -1,7 +1,5 @@
-Class cysnet.clinicaDental.agenda.msg.BajaPacienteResponse Extends Ens.Response
+Class cysnet.clinicaDental.agenda.msg.BajaPacienteResponse Extends (Ens.Response, cysnet.clinicaDental.agenda.msg.GenericResponse)
 {
-
-Property mensaje As %String(MAXLEN = "");
 
 Storage Default
 {
@@ -9,6 +7,9 @@ Storage Default
 <Subscript>"BajaPacienteResponse"</Subscript>
 <Value name="1">
 <Value>mensaje</Value>
+</Value>
+<Value name="2">
+<Value>exito</Value>
 </Value>
 </Data>
 <DefaultData>BajaPacienteResponseDefaultData</DefaultData>

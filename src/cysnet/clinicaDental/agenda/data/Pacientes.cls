@@ -1,6 +1,8 @@
 Class cysnet.clinicaDental.agenda.data.Pacientes Extends (%Persistent, %XML.Adaptor)
 {
 
+Property idPaciente As %Integer;
+
 Property nombre As %String;
 
 Property apellidos As %String;
@@ -31,6 +33,9 @@ Storage Default
 </Value>
 <Value name="6">
 <Value>baja</Value>
+</Value>
+<Value name="7">
+<Value>idPaciente</Value>
 </Value>
 </Data>
 <DataLocation>^cysnet.clinicaDe505B.PacientesD</DataLocation>

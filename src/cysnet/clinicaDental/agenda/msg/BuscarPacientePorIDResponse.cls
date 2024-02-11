@@ -1,9 +1,7 @@
-Class cysnet.clinicaDental.agenda.msg.BuscarPacientePorIDResponse Extends (Ens.Response, cysnet.clinicaDental.agenda.data.Pacientes)
+Class cysnet.clinicaDental.agenda.msg.BuscarPacientePorIDResponse Extends (Ens.Response, cysnet.clinicaDental.agenda.msg.GenericResponse, cysnet.clinicaDental.agenda.data.Pacientes)
 {
 
 Property idPaciente As %Integer;
-
-Property mensaje As %String(MAXLEN = "");
 
 Storage Default
 {
@@ -29,6 +27,9 @@ Storage Default
 </Value>
 <Value name="7">
 <Value>mensaje</Value>
+</Value>
+<Value name="8">
+<Value>exito</Value>
 </Value>
 </Data>
 <DefaultData>BuscarPacientePorIDResponseDefaultData</DefaultData>
