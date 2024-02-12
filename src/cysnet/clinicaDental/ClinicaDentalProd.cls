@@ -152,6 +152,8 @@ WHERE IdNotificacion = ?</Setting>
   </Item>
   <Item Name="ProcesoCitas" Category="" ClassName="cysnet.clinicaDental.bp.ProcesoCitas" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
+  <Item Name="ProcesoAdmisiones" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoAdmisiones" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
 </Production>
 }
 
