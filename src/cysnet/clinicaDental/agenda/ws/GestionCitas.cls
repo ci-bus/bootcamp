@@ -18,7 +18,7 @@ Method cancelarCita(idCita As %Integer) As cysnet.clinicaDental.agenda.msg.Cance
     set request = ##class(cysnet.clinicaDental.agenda.msg.CancelarCitaRequest).%New()
     set request.idCita = idCita
 
-	do ..SendRequestSync("CitasSQL", request, .response)
+	do ..SendRequestSync("ProcesoCitas", request, .response)
 	
 	quit response
 }
