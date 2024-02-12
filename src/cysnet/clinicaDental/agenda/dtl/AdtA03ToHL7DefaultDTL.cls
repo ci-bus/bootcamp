@@ -21,7 +21,7 @@ XData DTL [ XMLNamespace = "http://www.intersystems.com/dtl" ]
 <assign value='"A03"' property='target.{EVN:EventTypeCode}' action='set' />
 <assign value='$Replace($Replace($ZDT($H,8)," ",""),":","")' property='target.{EVN:RecordedDateTime}' action='set' />
 <assign value='1' property='target.{PID:SetIDPID}' action='set' />
-<assign value='source.idPaciente' property='target.{PID:PatientIdentifierList(1).IDNumber}' action='set' />
+<assign value='source.paciente.idPaciente' property='target.{PID:PatientIdentifierList().IDNumber}' action='set' />
 <assign value='"ID"' property='target.{PID:PatientIdentifierList(1).IdentifierTypeCode}' action='set' />
 <assign value='source.paciente.apellidos' property='target.{PID:PatientName(1).FamilyName}' action='set' />
 <assign value='source.paciente.nombre' property='target.{PID:PatientName(1).GivenName}' action='set' />

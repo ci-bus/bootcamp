@@ -14,7 +14,7 @@ Method OnProcessInput(pInput As EnsLib.SQL.Snapshot, Output pOutput As %Register
     set req.fechaAlta = pInput.Get("FechaAlta")
     set req.indEnviada = pInput.Get("IndEnviada")
 
-    quit ..SendRequestSync("ProcesoAlta",req,.rsp)
+    quit ..SendRequestSync("ProcesoAltas",req,.rsp)
 }
 
 }
