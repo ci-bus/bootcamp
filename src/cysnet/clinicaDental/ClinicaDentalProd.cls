@@ -119,7 +119,7 @@ WHERE IdCita = ?</Setting>
     <Setting Target="Adapter" Name="DSN">jdbc:mysql://mysql:3306/iris?useSSL=false</Setting>
     <Setting Target="Adapter" Name="JGService">JavaGateway</Setting>
     <Setting Target="Adapter" Name="JDBCDriver">com.mysql.jdbc.Driver</Setting>
-    <Setting Target="Adapter" Name="Query">SELECT IdCita, FechaAlta 
+    <Setting Target="Adapter" Name="Query">SELECT IdAlta, IdCita, FechaAlta 
 FROM Alta 
 WHERE IndEnviada = 0 
 ORDER BY IdCita</Setting>
@@ -153,6 +153,8 @@ WHERE IdNotificacion = ?</Setting>
   <Item Name="ProcesoCitas" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoCitas" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
   <Item Name="ProcesoAdmisiones" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoAdmisiones" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
+  <Item Name="ProcesoAltas" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoAltas" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
 </Production>
 }
