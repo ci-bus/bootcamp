@@ -5,7 +5,7 @@ Class cysnet.clinicaDental.agenda.ws.GestionCitas Extends EnsLib.SOAP.Service [ 
 Parameter SERVICENAME = "GestionCitas";
 
 /// Namespace SOAP para servicio web
-Parameter NAMESPACE = "BOOTCAMPENERO24";
+Parameter NAMESPACE = "BOOTCAMP-ENERO-2024";
 
 /// Se utilizarán namespaces de clases referenciadas en WSDL.
 Parameter USECLASSNAMESPACES = 1;
@@ -33,7 +33,36 @@ Method altaCitas(idPaciente As %Integer, descCita As %String, fechaCita As %Time
     Set req.descCita = descCita
     Set req.fechaCita = fechaCita
 	
-	Do ..SendRequestSync("CitasSQL", req, .rsp)
+	Do ..SendRequestSync("ProcesoCitas", req, .rsp)
+	
+	Quit rsp
+}
+
+Method buscarCita(idCita As %Integer) As cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDResponse [ WebMethod ]
+{
+	#dim req As cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest
+	#dim rsp As cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDResponse
+	
+	Set req = ##class(cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest).%New()
+	Set req.idCita = idCita
+	
+	Do ..SendRequestSync("ProcesoCitas", req, .rsp)
+	
+	Quit rsp
+}
+
+Method modificarCita(idCita As %Integer, idPaciente As %Integer, descCita As %String, fechaCita As %TimeStamp) As cysnet.clinicaDental.agenda.msg.ModificarCitaResponse [ WebMethod ]
+{
+	#dim req As cysnet.clinicaDental.agenda.msg.ModificarCitaRequest
+	#dim rsp As cysnet.clinicaDental.agenda.msg.ModificarCitaResponse
+	
+	Set req = ##class(cysnet.clinicaDental.agenda.msg.ModificarCitaRequest).%New()
+	Set req.idCita = idCita
+	Set req.idPaciente = idPaciente
+	Set req.descCita = descCita
+	Set req.fechaCita = fechaCita
+	
+	Do ..SendRequestSync("ProcesoCitas", req, .rsp)
 	
 	Quit rsp
 }

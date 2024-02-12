@@ -10,7 +10,6 @@ Parameter INVOCATION = "Queue";
 /// Método que crea un paciente
 Method NuevoPaciente(pRequest As cysnet.clinicaDental.agenda.msg.NuevoPacienteRequest, Output pResponse As cysnet.clinicaDental.agenda.msg.NuevoPacienteResponse) As %Status
 {
-  
     #dim sc As %Status = $$$OK
     #dim rs As EnsLib.SQL.GatewayResultSet
     

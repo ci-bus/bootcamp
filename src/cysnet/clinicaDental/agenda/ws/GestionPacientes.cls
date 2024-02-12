@@ -36,7 +36,7 @@ Method BajaPaciente(ID As %Integer) As cysnet.clinicaDental.agenda.msg.BajaPacie
 	Set req = ##class(cysnet.clinicaDental.agenda.msg.BajaPacienteRequest).%New()
 	Set req.ID = ID
 	
-	Do ..SendRequestSync("PacientesSQL", req, .rsp)
+	Do ..SendRequestSync("ProcesoPaciente", req, .rsp)
 	
 	Quit rsp
 }

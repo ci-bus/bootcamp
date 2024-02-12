@@ -55,7 +55,7 @@ Method altaCitas(pRequest As cysnet.clinicaDental.agenda.msg.AltaCitasRequest, O
     Set pResponse = ##class(cysnet.clinicaDental.agenda.msg.AltaCitasRespose).%New()
 
     Set rs = ##class(EnsLib.SQL.GatewayResultSet).%New()
-    Set sc = ..Adapter.ExecuteQuery(.rs, "SELECT * FROM Cita WHERE IdPaciente = ?", pRequest.idPaciente)
+    Set sc = ..Adapter.ExecuteQuery(.rs, "SELECT * FROM Cita WHERE IdPaciente = ? AND CodEstado <> 4", pRequest.idPaciente)
     If ($$$ISOK(sc)) {
         If (rs.Next(.sc)) {
             Set pResponse.exito = 0
@@ -86,14 +86,47 @@ Method altaCitas(pRequest As cysnet.clinicaDental.agenda.msg.AltaCitasRequest, O
     Quit numRows
 }
 
+Method buscarCita(pRequest As cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest, Output pResponse As cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDResponse) As %Status
+{
+    #dim sc As %Status = $$$OK
+    #dim rs As EnsLib.SQL.GatewayResultSet
+
+    Set pResponse = ##class(cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDResponse).%New()
+
+    Set rs = ##class(EnsLib.SQL.GatewayResultSet).%New()
+    Set sc = ..Adapter.ExecuteQuery(.rs, "SELECT * FROM Cita WHERE IdCita = ?", pRequest.idCita)
+    If ($$$ISOK(sc)) {
+        If (rs.Next(.sc)) {
+            Set pResponse.exito = 1
+            Set pResponse.idCita = rs.Get("IdCita")
+            Set pResponse.idPaciente = rs.Get("IdPaciente")
+            Set pResponse.descCita = rs.Get("DescCita")
+            Set pResponse.fechaCita = rs.Get("FechaCita")
+            Set pResponse.codEstado = rs.Get("CodEstado")
+            Quit sc
+        } Else {
+            Set pResponse.mensaje = "No se ha encontrado la cita"
+            Set pResponse.exito = 0
+        }
+    } Else {
+        Set pResponse.mensaje = "Error en consulta: "_sql
+        Set pResponse.exito = 0
+    }
+    
+    Quit $$$OK
+}
+
 XData MessageMap
 {
 <MapItems>
     <MapItem MessageType="cysnet.clinicaDental.agenda.msg.CancelarCitaRequest">
         <Method>cancelarCita</Method>
     </MapItem>
-     <MapItem MessageType="cysnet.clinicaDental.agenda.msg.AltaCitasRequest">
+    <MapItem MessageType="cysnet.clinicaDental.agenda.msg.AltaCitasRequest">
         <Method>altaCitas</Method>
+    </MapItem>
+    <MapItem MessageType="cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest">
+        <Method>buscarCita</Method>
     </MapItem>
 </MapItems>
 }
