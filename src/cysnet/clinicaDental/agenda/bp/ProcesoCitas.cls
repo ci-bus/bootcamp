@@ -1,5 +1,5 @@
 /// 
-Class cysnet.clinicaDental.bp.ProcesoCitas Extends Ens.BusinessProcessBPL
+Class cysnet.clinicaDental.agenda.bp.ProcesoCitas Extends Ens.BusinessProcessBPL
 {
 
 /// BPL Definition
