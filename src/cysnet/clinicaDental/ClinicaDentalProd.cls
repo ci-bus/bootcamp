@@ -28,8 +28,6 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="JGService">JavaGateway</Setting>
     <Setting Target="Adapter" Name="JDBCDriver">com.mysql.jdbc.Driver</Setting>
   </Item>
-  <Item Name="NotificacionesSQL" Category="" ClassName="cysnet.clinicaDental.notificaciones.bo.NotificacionesSQL" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
-  </Item>
   <Item Name="MiServicio" Category="" ClassName="cysnet.miguel.ws.MiServicio" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
   <Item Name="ProcesoPersona" Category="" ClassName="cysnet.miguel.bp.ProcesoPersona" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
@@ -145,6 +143,14 @@ WHERE IdNotificacion = ?</Setting>
     <Setting Target="Adapter" Name="KeyFieldName">IdNotificacion</Setting>
   </Item>
   <Item Name="ProcesoPaciente" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoPaciente" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
+  <Item Name="NotificacionesSQL" Category="" ClassName="cysnet.clinicaDental.agenda.bo.NotificacionesSQL" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+    <Setting Target="Adapter" Name="Credentials">Mysql</Setting>
+    <Setting Target="Adapter" Name="DSN">jdbc:mysql://mysql:3306/iris?useSSL=false</Setting>
+    <Setting Target="Adapter" Name="JDBCDriver">com.mysql.jdbc.Driver</Setting>
+    <Setting Target="Adapter" Name="JGService">JavaGateway</Setting>
+  </Item>
+  <Item Name="ProcesoCitas" Category="" ClassName="cysnet.clinicaDental.bp.ProcesoCitas" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
 </Production>
 }
