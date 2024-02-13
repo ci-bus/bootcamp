@@ -69,7 +69,17 @@ Method altaCitas(pRequest As cysnet.clinicaDental.agenda.msg.AltaCitasRequest, O
         Set sc = ..Adapter.ExecuteUpdate(.numRows, sql, pRequest.idPaciente, pRequest.descCita, pRequest.fechaCita, 1)
         If ($$$ISOK(sc)) {
             If (numRows > 0) {
-                Set pResponse.mensaje = "La cita se ha creado con éxito"
+                set sc = ..Adapter.ExecuteQuery(.rs, "SELECT LAST_INSERT_ID() AS IdCita")
+                if ($$$ISOK(sc)) {
+                    if (rs.Next(.sc)) {
+                        Set pResponse.idCita = rs.Get("IdCita")
+                        Set pResponse.mensaje = "La cita se ha creado con éxito"
+                    } else {
+                        set pResponse.exito = 0
+                        set pResponse.mensaje = "No se encuentra el identificador"
+                    }
+                }
+                
             } Else {
                 Set pResponse.mensaje = "No se ha podido crear la cita"
             }

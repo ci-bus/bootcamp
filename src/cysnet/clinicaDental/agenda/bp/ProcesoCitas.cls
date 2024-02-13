@@ -2,6 +2,11 @@
 Class cysnet.clinicaDental.agenda.bp.ProcesoCitas Extends Ens.BusinessProcessBPL
 {
 
+Storage Default
+{
+<Type>%Storage.Persistent</Type>
+}
+
 /// BPL Definition
 XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
@@ -21,18 +26,8 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <assign name="Asignar objReq" property="context.objReq" value="request" action="set" xpos='200' ypos='250' />
 <assign name="Nombre clase" property="context.nombreClase" value="request.%ClassName()" action="set" xpos='200' ypos='350' />
 <switch name='Según consulta' xpos='200' ypos='450' xend='200' yend='700' >
-<case condition='context.nombreClase = "AltaCitasRequest"' name='AltaCitasRequest' >
-<call name='Alta cita' target='CitasSQL' async='0' xpos='200' ypos='600' >
-<request type='cysnet.clinicaDental.agenda.msg.AltaCitasRequest' >
-<assign property="callrequest" value="request" action="set" />
-</request>
-<response type='cysnet.clinicaDental.agenda.msg.AltaCitasRespose' >
-<assign property="response" value="callresponse" action="set" />
-</response>
-</call>
-</case>
 <case condition='context.nombreClase = "BuscarCitaPorIDRequest"' name='BuscarCitaPorIDRequest' >
-<call name='Buscar cita' target='CitasSQL' async='0' xpos='470' ypos='600' >
+<call name='Buscar cita' target='CitasSQL' async='0' xpos='200' ypos='600' >
 <request type='cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest' >
 <assign property="callrequest" value="request" action="set" />
 </request>
@@ -42,7 +37,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </call>
 </case>
 <case condition='context.nombreClase = "ModificarCitaRequest"' name='ModificarCitaRequest' >
-<sequence name='Modificar cita' xpos='740' ypos='600' xend='200' yend='1650' >
+<sequence name='Modificar cita' xpos='470' ypos='600' xend='200' yend='1650' >
 <call name='Buscar paciente' target='PacientesSQL' async='0' xpos='200' ypos='250' >
 <request type='cysnet.clinicaDental.agenda.msg.BuscarPacientePorIDRequest' >
 <assign property="callrequest.idPaciente" value="request.idPaciente" action="set" />
@@ -104,7 +99,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </sequence>
 </case>
 <case condition='context.nombreClase = "CancelarCitaRequest"' name='CancelarCitaRequest' >
-<sequence name='Cancelar cita' xpos='1010' ypos='600' xend='200' yend='800' >
+<sequence name='Cancelar cita' xpos='740' ypos='600' xend='200' yend='800' >
 <call name='Buscar cita 2' target='CitasSQL' async='0' xpos='200' ypos='250' >
 <request type='cysnet.clinicaDental.agenda.msg.BuscarCitaPorIDRequest' >
 <assign property="callrequest.idCita" value="request.idCita" action="set" />
@@ -136,6 +131,18 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </if>
 </sequence>
 </case>
+<case condition='context.nombreClase = "AltaCitasRequest"' name='AltaCitasRequest' >
+<sequence name='Alta cita' xpos='1010' ypos='600' xend='200' yend='350' >
+<call name='Alta cita' target='CitasSQL' async='0' xpos='200' ypos='250' >
+<request type='cysnet.clinicaDental.agenda.msg.AltaCitasRequest' >
+<assign property="callrequest" value="request" action="set" />
+</request>
+<response type='cysnet.clinicaDental.agenda.msg.AltaCitasRespose' >
+<assign property="response" value="callresponse" action="set" />
+</response>
+</call>
+</sequence>
+</case>
 <default name='default' >
 <sequence name='No implementado' xpos='1280' ypos='600' xend='200' yend='550' >
 <code name='Clase desconocida' xpos='200' ypos='250' >
@@ -149,11 +156,6 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 </switch>
 </sequence>
 </process>
-}
-
-Storage Default
-{
-<Type>%Storage.Persistent</Type>
 }
 
 }

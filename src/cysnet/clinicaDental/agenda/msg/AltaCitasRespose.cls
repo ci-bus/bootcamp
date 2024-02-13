@@ -1,6 +1,8 @@
 Class cysnet.clinicaDental.agenda.msg.AltaCitasRespose Extends (Ens.Response, cysnet.clinicaDental.agenda.msg.GenericResponse)
 {
 
+Property idCita As %Integer;
+
 Storage Default
 {
 <Data name="AltaCitasResposeDefaultData">
@@ -10,6 +12,9 @@ Storage Default
 </Value>
 <Value name="2">
 <Value>exito</Value>
+</Value>
+<Value name="3">
+<Value>idCita</Value>
 </Value>
 </Data>
 <DefaultData>AltaCitasResposeDefaultData</DefaultData>
