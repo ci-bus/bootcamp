@@ -63,7 +63,7 @@ XData ProductionDefinition
   <Item Name="MiServicioSoap" Category="" ClassName="cysnet.miguel.ws.MiServicio.bo.MiServicioSoap" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
     <Setting Target="Adapter" Name="WebServiceURL">http://localhost:1980/csp/healthshare/BOOTCAMP-ENERO-2024/cysnet.miguel.ws.MiServicio.cls</Setting>
   </Item>
-  <Item Name="EnviarEmail" Category="" ClassName="cysnet.miguel.bo.EnviarEmail" PoolSize="1" Enabled="false" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  <Item Name="EnviarEmail" Category="" ClassName="cysnet.miguel.bo.EnviarEmail" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
     <Setting Target="Adapter" Name="Credentials">CuentaGmail</Setting>
     <Setting Target="Adapter" Name="SMTPPort">587</Setting>
     <Setting Target="Adapter" Name="SMTPServer">smtp.gmail.com</Setting>
@@ -155,6 +155,8 @@ WHERE IdNotificacion = ?</Setting>
   <Item Name="ProcesoAdmisiones" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoAdmisiones" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
   <Item Name="ProcesoAltas" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoAltas" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
+  </Item>
+  <Item Name="ProcesoNotificaciones" Category="" ClassName="cysnet.clinicaDental.agenda.bp.ProcesoNotificaciones" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
   </Item>
 </Production>
 }
